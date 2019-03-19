@@ -1,25 +1,82 @@
 <!DOCTYPE html>
 <html>
-  <header>Top of the Page</header>
+  <head>
+    <link rel="stylesheet" href="index.css">
+  </head>
   <body>
-    <table>
+    <div>TIC TAC TOE</div>
+    <table id="table">
       <tr>
-        <th class="square" id="0, 0">square</th>
-        <th class="square" id="0, 1">square</th>
-        <th class="square" id="0, 2">square</th>
+        <th class="square" id="0, 0"></th>
+        <th class="square" id="0, 1"></th>
+        <th class="square" id="0, 2"></th>
       </tr>
       <tr>
-        <th class="square" id="1, 0">square</th>
-        <th class="square" id="1, 1">square</th>
-        <th class="square" id="1, 2">square</th>
+        <th class="square" id="1, 0"></th>
+        <th class="square" id="1, 1"></th>
+        <th class="square" id="1, 2"></th>
       </tr>
       <tr>
-        <th class="square" id="2, 0">square</th>
-        <th class="square" id="2, 1">square</th>
-        <th class="square" id="2, 2">square</th>
+        <th class="square" id="2, 0"></th>
+        <th class="square" id="2, 1"></th>
+        <th class="square" id="2, 2"></th>
       </tr>
-      
     </table>
+    <script>
+
+      var matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+
+      var isRowWin = function(currentRow) {
+        if (currentRow[0] === 1 && currentRow[1] === 1 && currentRow[2] === 1) {
+          alert("Player One Wins");
+        } 
+        if (currentRow[0] === 2 && currentRow[1] === 2 && currentRow[2] === 2) {
+          alert("Player Two Wins");
+        }
+      };
+
+      var anyRowWins = function(matrix) {
+        for (var i = 0; i < matrix.length; i++) {
+          isRowWin(matrix[i]);
+        }
+      };
+
+      var getRow = function(n) {
+        return Number(document.getElementById(n).id.split(',')[0]);
+      };
+
+      var getCol = function(n) {
+        return Number(document.getElementById(n).id.split(',')[1]);
+      };
+
+      var squares = document.getElementsByClassName("square");
+      var playerOne = true;
+      var count = 0;
+      for (var i = 0; i < squares.length; i++) {
+        document.getElementById(squares[i].id).addEventListener("click", function() {
+        if (playerOne) {
+          document.getElementById(this.id).innerHTML = "O";
+          document.getElementById(this.id).style.backgroundColor = "blue";
+          var col = getCol(this.id);
+          var row = getRow(this.id);
+          matrix[row][col] = 1;
+          count++;
+          playerOne = false;
+          anyRowWins(matrix);
+          console.log(matrix);
+        } else {
+          document.getElementById(this.id).innerHTML = "X";
+          document.getElementById(this.id).style.backgroundColor = "red";
+          var col = getCol(this.id);
+          var row = getRow(this.id);
+          matrix[row][col] = 2;
+          count++;
+          playerOne = true;
+          console.log(matrix);
+        }
+        });
+      }
+    </script>
   </body>
 </html>
 
